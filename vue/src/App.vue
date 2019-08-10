@@ -1,17 +1,22 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <User/>
+    <p>
+      <router-link to="/vue/helloworld/222">Go to HelloWorld</router-link>
+    </p>
+    <p>
+      <router-link to="/vue/user/222">Go to User</router-link>
+    </p>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  mounted() {
+    // this.$router.push('helloworld/123')
   }
 }
 </script>

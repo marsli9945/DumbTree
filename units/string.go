@@ -8,7 +8,7 @@ func StringToArr(str string, pix string) []string {
 	var arr []string
 
 	for i, ch := range str {
-		if ch == 47 {
+		if string(ch) == pix {
 			if s != "" {
 				arr = append(arr, s)
 			}
