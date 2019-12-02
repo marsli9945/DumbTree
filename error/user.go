@@ -1,4 +1,4 @@
-package dumbError
+package error
 
 type UserError string
 

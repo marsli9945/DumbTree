@@ -7,47 +7,43 @@ import (
 	"net/http"
 )
 
+type Collection struct {
+	path  []string
+	param interface{}
+	dns   string
+}
+
 func MainHandle(writer http.ResponseWriter, request *http.Request) error {
 
 	if request.URL.Path == "/favicon.ico" {
 		return nil
 	}
 
-	pathArr := units.StringToArr(request.URL.Path, "/")
+	var coll Collection
 
-	fmt.Println(pathArr)
+	coll.path = units.StringToArr(request.URL.Path, "/")
 
-	if len(pathArr) < 2 || len(pathArr) > 3 {
+	if len(coll.path) < 2 || len(coll.path) > 3 {
 		return dumbError.UserError("非法路由")
 	}
 
-	fmt.Println(request.Method)
+	param, err := units.Params(request)
 
-	params := units.Params(request)
+	if err != nil {
+		return err
+	}
 
-	units.Foreach(params, func(k string, v interface{}) {
-		fmt.Println(k, v)
-	})
+	coll.param = param
 
-	//fmt.Println(units.Get(request))
-	//fmt.Println(units.Post(request))
-	//fmt.Println(units.Post(request))
-	//param := units.Post(request)
-	//fmt.Println(param["id"])
-	//fmt.Println(param["name"].(string))
-	//fmt.Println(param["group"])
-	//group := param["group"].(map[string]interface{})
-	//fmt.Println(group["aa"])
-	//fmt.Println(group["bb"])
-	//fmt.Println(group["bb"].(map[string]interface{})["cc"].(float64))
+	fmt.Println(coll.param)
 
-	//fmt.Println(request.Header)
-	//request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	//units.Foreach(coll.param, func(k string, v interface{}) {
+	//	fmt.Println(k, v)
+	//	units.Foreach(v, func(mk string, mv interface{}) {
+	//		fmt.Println(mk,mv)
+	//	})
+	//	fmt.Println()
+	//})
 
-	//fmt.Println(request.URL.Query())
-	//fmt.Println(request.ParseForm())
-
-	//fmt.Println(request.Method)
-	//fmt.Println(request.URL.Path)
 	return nil
 }

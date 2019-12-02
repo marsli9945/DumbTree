@@ -6,6 +6,16 @@ import (
 	"os"
 )
 
+type UserError string
+
+func (e UserError) Message() string {
+	return string(e)
+}
+
+func (e UserError) Error() string {
+	return e.Message()
+}
+
 type appHandle func(writer http.ResponseWriter, request *http.Request) error
 
 /**
